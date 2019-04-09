@@ -11,7 +11,7 @@
             "request": "launch",
             "targetArchitecture": "x64",
             "program": "${workspaceFolder}/${fileBasenameNoExtension}.exe",
-            "miDebuggerPath": "D:/MinGw/mingw64/bin/gdb.exe",
+            "miDebuggerPath": "D:/UserFiles/Program/Mingw/mingw64/bin/gdb.exe",
             "MIMode": "gdb",
             "args": [],
             "stopAtEntry": false,

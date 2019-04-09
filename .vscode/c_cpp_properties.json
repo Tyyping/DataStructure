@@ -22,7 +22,7 @@
                 "/System/Library/Frameworks",
                 "/Library/Frameworks"
             ],
-            "compilerPath": "D:\\MinGw\\mingw64\\bin\\gcc.exe",
+            "compilerPath": "D:/UserFiles/Program/Mingw/mingw64/bin/gcc.exe",
             "cStandard": "c11",
             "cppStandard": "c++17"
         },
@@ -44,15 +44,15 @@
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
             },
-            "compilerPath": "D:\\MinGw\\mingw64\\bin\\gcc.exe",
+            "compilerPath": "D:/UserFiles/Program/Mingw/mingw64/bin/gcc.exe",
             "cStandard": "c11",
             "cppStandard": "c++17"
         },
         {
             "name": "Win32",
             "includePath": [
-                "D:/MinGw/mingw64/include",
-                "D:/MinGw/mingw64/x86_64-w64-mingw32/include",
+                "D:/UserFiles/Program/Mingw/mingw64/include",
+                "D:/UserFiles/Program/Mingw/mingw64/x86_64-w64-mingw32/include",
                 "${workspaceRoot}"
             ],
             "defines": [
@@ -62,14 +62,14 @@
             "intelliSenseMode": "msvc-x64",
             "browse": {
                 "path": [
-                    "D:/MinGw/mingw64/include",
-                    "D:/MinGw/mingw64/x86_64-w64-mingw32/include",
+                    "D:/UserFiles/Program/Mingw/mingw64/include",
+                    "D:/UserFiles/Program/Mingw/mingw64/x86_64-w64-mingw32/include",
                     "${workspaceRoot}"
                 ],
                 "limitSymbolsToIncludedHeaders": true,
                 "databaseFilename": ""
             },
-            "compilerPath": "D:\\MinGw\\mingw64\\bin\\gcc.exe",
+            "compilerPath": "D:/UserFiles/Program/Mingw/mingw64/bin/gcc.exe",
             "cStandard": "c11",
             "cppStandard": "c++17"
         }
