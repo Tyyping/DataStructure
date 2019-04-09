@@ -96,6 +96,6 @@ Status main()
     printf("name=%s, number=%d\n", stu.name, stu.number);
     
 	getchar();
-
+    getchar();
 	
 }
