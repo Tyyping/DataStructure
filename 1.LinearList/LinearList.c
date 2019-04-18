@@ -14,7 +14,7 @@ typedef struct
 }SqList;
 
 /*用动态内存分配的方式初始化一个线性顺序表*/
-Status ListInit(SqList *L)
+Status InitList(SqList *L)
 {
     L->stu = (Stu *)malloc(LIST_INIT_LENGTH * sizeof(Stu));
 
@@ -25,9 +25,38 @@ Status ListInit(SqList *L)
     return OK;
 }
 
+/*清空一个线性表，释放分配的内存资源，同时将元素长度和实际分配的内存单元数清零*/
+Status ClearList(SqList *L)
+{
+    //对于空表，不执行任何操作
+    if(L->length == 0 && L->stu == NULL)
+        return OK;
+    
+    free(L->stu);
+    L->length = 0;
+    L->listSize = 0;
+    return OK;
+}
+
+/*判断顺序表是否为空表*/
+Status ListEmpty(SqList *L)
+{
+    if(L->length == 0)
+        return TRUE;
+    else
+        return FALSE;
+}
+
+/*获取顺序表的长度*/
+int ListLength(SqList *L)
+{
+    return L->length;
+}
+
 /*在指定位置插入一个元素， 0 <= pos <= L.length*/
 Status ListInsert(SqList *L, int pos, Stu stu)
 {
+    //如果给定pos不在当前顺序表范围内，返回ERROR
     if(pos < 0 || pos > L->length)
         return ERROR;
     //如果当前存储空间已满，需增加分配
@@ -62,7 +91,6 @@ Status ListDelete(SqList *L, int pos, Stu *pStu)
     //删除点后面的数据，逐位向前移一位
     for(Stu * p = &L->stu[pos]; p <= &L->stu[L->length - 2]; p++)
     {
-
         *p = *(p + 1);
     }
 
@@ -109,10 +137,23 @@ int ListLocate(SqList *L, Stu stu)
     return -1;
 }
 
+Status ListUnion(SqList *src, SqList *des)
+{
+    for(int cnt = 0; cnt < src->length; cnt++)
+    {
+        if(ListLocate(des, src->stu[cnt]) == -1)
+        {
+            ListInsert(des, des->length + cnt, src->stu[cnt]);
+        }
+    }
+    return OK;
+
+}
+
 Status main()
 {
     SqList List;
-    ListInit(&List);
+    InitList(&List);
 
     Stu stu;
     stu.number = 1; stu.name = "abc";
@@ -142,17 +183,38 @@ Status main()
     stu.number = 9; stu.name = "xyz";
     ListInsert(&List, 8, stu);
 
-    stu.number = 3; stu.name = "ghi";
-    printf("%d\n", ListLocate(&List, stu));
+    SqList List1;
+    InitList(&List1);
 
+    stu.number = 7; stu.name = "rst";
+    ListInsert(&List1, 0, stu);
 
-    ListDelete(&List, 0, &stu);
-    printf("name=%s, number=%d\n", stu.name, stu.number);
-    ListDelete(&List, 0, &stu);
-    printf("name=%s, number=%d\n", stu.name, stu.number);
-    ListDelete(&List, 0, &stu);
-    printf("name=%s, number=%d\n", stu.name, stu.number);
+    stu.number = 8; stu.name = "uvwzzz";
+    ListInsert(&List1, 0, stu);
+
+    stu.number = 9; stu.name = "xyzw";
+    ListInsert(&List1, 0, stu);
     
+    ListUnion(&List1, &List);
+
+    printf("the length of List is %d\r\n", ListLength(&List));
+
+    if(ListEmpty(&List) == TRUE)
+        printf("List is Empty!\r\n");
+
+    for(int cnt = 0, len = List.length; cnt < len; cnt++)
+    {
+        ListDelete(&List, 0, &stu);
+        printf("name=%s, number=%d\r\nthe number of remain elements is %d\r\n", stu.name, stu.number, ListLength(&List));
+    }
+
+    
+    
+    if(ListEmpty(&List) == TRUE)
+        printf("List is Empty!\r\n");
+
+    ClearList(&List);
+
 	getchar();
 	
 }
