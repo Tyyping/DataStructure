@@ -9,11 +9,11 @@
 #define OVERFLOW    -2
 
 #define NAME_LENGTH 20
-
+#define MAX_SIZE    20
 typedef int Status;
 typedef struct
 {
     char *name;
-    int  number;
+    int  age;
 }Stu;
 #endif

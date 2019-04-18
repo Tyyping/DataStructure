@@ -112,7 +112,7 @@ Status ListGetElem(SqList *L, int pos, Stu *pStu)
 /*比较x,y的值，相等时返回TRUE，不等返回FALSE*/
 static Status isEqual(Stu x, Stu y)
 {
-    if(x.number == y.number)
+    if(x.age == y.age)
     {
         if(strcmp((const char *)x.name, (const char *)y.name) == 0)
         {
@@ -137,62 +137,49 @@ int ListLocate(SqList *L, Stu stu)
     return -1;
 }
 
-Status ListUnion(SqList *src, SqList *des)
-{
-    for(int cnt = 0; cnt < src->length; cnt++)
-    {
-        if(ListLocate(des, src->stu[cnt]) == -1)
-        {
-            ListInsert(des, des->length + cnt, src->stu[cnt]);
-        }
-    }
-    return OK;
-
-}
-
 Status main()
 {
     SqList List;
     InitList(&List);
 
     Stu stu;
-    stu.number = 1; stu.name = "abc";
+    stu.age = 1; stu.name = "abc";
     ListInsert(&List, 0, stu);
 
-    stu.number = 2; stu.name = "def";
+    stu.age = 2; stu.name = "def";
     ListInsert(&List, 1, stu);
 
-    stu.number = 3; stu.name = "ghi";
+    stu.age = 3; stu.name = "ghi";
     ListInsert(&List, 2, stu);
 
-    stu.number = 4; stu.name = "jkl";
+    stu.age = 4; stu.name = "jkl";
     ListInsert(&List, 3, stu);
 
-    stu.number = 5; stu.name = "mn";
+    stu.age = 5; stu.name = "mn";
     ListInsert(&List, 4, stu);
 
-    stu.number = 6; stu.name = "opq";
+    stu.age = 6; stu.name = "opq";
     ListInsert(&List, 5, stu);
 
-    stu.number = 7; stu.name = "rst";
+    stu.age = 7; stu.name = "rst";
     ListInsert(&List, 6, stu);
 
-    stu.number = 8; stu.name = "uvw";
+    stu.age = 8; stu.name = "uvw";
     ListInsert(&List, 7, stu);
 
-    stu.number = 9; stu.name = "xyz";
+    stu.age = 9; stu.name = "xyz";
     ListInsert(&List, 8, stu);
 
     SqList List1;
     InitList(&List1);
 
-    stu.number = 7; stu.name = "rst";
+    stu.age = 7; stu.name = "rst";
     ListInsert(&List1, 0, stu);
 
-    stu.number = 8; stu.name = "uvwzzz";
+    stu.age = 8; stu.name = "uvwzzz";
     ListInsert(&List1, 0, stu);
 
-    stu.number = 9; stu.name = "xyzw";
+    stu.age = 9; stu.name = "xyzw";
     ListInsert(&List1, 0, stu);
     
     ListUnion(&List1, &List);
@@ -205,7 +192,7 @@ Status main()
     for(int cnt = 0, len = List.length; cnt < len; cnt++)
     {
         ListDelete(&List, 0, &stu);
-        printf("name=%s, number=%d\r\nthe number of remain elements is %d\r\n", stu.name, stu.number, ListLength(&List));
+        printf("name=%s, age=%d\r\nthe number of remain elements is %d\r\n", stu.name, stu.age, ListLength(&List));
     }
 
     
