@@ -13,7 +13,7 @@
                 "-g",           //使用c++17标准编译
                 "${file}",    //当前文件名
                 "-o",           //对象名，不进行编译优化
-                "${fileDirname}/${fileBasenameNoExtension}.exe",  //当前文件名（去掉扩展名）
+                "${fileDirname}\\${fileBasenameNoExtension}.exe",  //当前文件名（去掉扩展名）
             ],
           // 所以以上部分，就是在shell中执行（假设文件名为filename.cpp）
           // g++ filename.cpp -o filename.exe

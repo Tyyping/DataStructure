@@ -1,83 +1,227 @@
 #include "LinearList.h"
+#include <stdbool.h> 
 #include <stdio.h>
+#include <string.h>
+
 typedef struct 
 {
     Stu stu[MAX_SIZE];
     int length;
-}AList;
+}List;
 
-/*åˆå§‹åŒ–ä¸€ä¸ªçº¿æ€§é¡ºåºè¡¨*/
-Status InitAList(AList *L)
+
+/* ³õÊ¼»¯Ò»¸öÏßĞÔË³Ğò±í */
+Status InitList(List *pL)
 {
-    L->length = 0;
+    pL->length = 0;
     return OK;
 }
 
-/*åœ¨æŒ‡å®šä½ç½®æ’å…¥ä¸€ä¸ªå…ƒç´ ï¼Œ 0 <= pos <= L.length*/
-Status AListInsert(AList *L, int pos, Stu stu)
+
+/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
+/* ²Ù×÷½á¹û£º½«LÖØÖÃÎª¿Õ±í */
+Status ClearList(List *pL)
 {
-    /* é¡ºåºçº¿æ€§è¡¨å·²æ»¡ */
-    if(L->length >= MAX_SIZE)
+    pL->length = 0;
+    return OK;
+}
+
+
+/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
+/* ²Ù×÷½á¹û£ºÈôLÎª¿Õ±í£¬Ôò·µ»Øtrue£¬·ñÔò·µ»Øtrue */
+bool ListEmpty(List L)
+{
+    if(L.length == 0)
+        return true;
+    else
+        return false;
+}
+
+/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
+/* ²Ù×÷½á¹û£º·µ»ØLÖĞÊı¾İÔªËØ¸öÊı */
+int ListLength(List L)
+{
+    return L.length;
+}
+
+
+/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
+/* ²Ù×÷½á¹û£ºÔÚ*pL±íÖĞµÄposÎ»ÖÃ²åÈëÒ»¸öÔªËØ£¬ posµÄ·¶Î§ÊÇ[0, pL->length]*/
+Status ListInsert(List *pL, int pos, Stu stu)
+{
+    /* Ë³ĞòÏßĞÔ±íÒÑÂú */
+    if(pL->length >= MAX_SIZE)
         return ERROR;
-    /* æ’å…¥ä½ç½®æœ‰è¯¯ */
-    if(pos < 0 || pos > L->length)
+    /* ²åÈëÎ»ÖÃÓĞÎó */
+    if(pos < 0 || pos > pL->length)
         return ERROR;
-    /* posä½ç½®ä¹‹åçš„å…ƒç´ ï¼Œä¾æ¬¡å‘åç§»ä¸€ä½ */
-    for(int p = L->length - 1; p >= pos; --p)
+    /* posÎ»ÖÃÖ®ºóµÄÔªËØ£¬ÒÀ´ÎÏòºóÒÆÒ»Î» */
+    for(int p = pL->length - 1; p >= pos; --p)
     {
-        L->stu[p + 1] = L->stu[p];
+        pL->stu[p + 1] = pL->stu[p];
     }
-    L->stu[pos] = stu;      //æ’å…¥ç‚¹èµ‹å€¼ï¼Œç»“æ„ä½“å¯ä»¥æ•´ä½“èµ‹å€¼
-    ++L->length;            //é•¿åº¦+1
+    pL->stu[pos] = stu;      //²åÈëµã¸³Öµ£¬½á¹¹Ìå¿ÉÒÔÕûÌå¸³Öµ
+    ++pL->length;            //³¤¶È+1
     return OK;
 }
 
-Status AListDelete(AList *L, int pos, Stu *pStu)
+
+/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
+/* ²Ù×÷½á¹û£ºÉ¾³ı*pL±íÖĞposÎ»ÖÃÉÏµÄÔªËØ£¬ posµÄ·¶Î§ÊÇ[0, pL->length-1]*/
+Status ListDelete(List *pL, int pos, Stu *pStu)
 {
-    /* åˆ é™¤ä½ç½®æœ‰è¯¯ */
-    if(pos < 0 || pos > L->length - 1)
+    /* É¾³ıÎ»ÖÃÓĞÎó */
+    if(pos < 0 || pos > pL->length - 1)
         return ERROR;
     
-    *pStu = L->stu[pos];    //æå–åˆ é™¤ç‚¹å…ƒç´ 
-    /* posä½ç½®ä¹‹åçš„å…ƒç´ ï¼Œä¾æ¬¡å‘å‰ç§»ä¸€ä½ */
-    for(int p = pos; p <= L->length - 2; ++p)
+    *pStu = pL->stu[pos];    //ÌáÈ¡É¾³ıµãÔªËØ
+    /* posÎ»ÖÃÖ®ºóµÄÔªËØ£¬ÒÀ´ÎÏòÇ°ÒÆÒ»Î» */
+    for(int p = pos; p <= pL->length - 2; ++p)
     {
-        L->stu[p] = L->stu[p + 1];
+        pL->stu[p] = pL->stu[p + 1];
     }
-    --L->length;
+    --pL->length;
     return OK;
 }
+
+
+/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
+/* ²Ù×÷½á¹û£º½«L±íÖĞposÎ»ÖÃÉÏµÄÔªËØÖµ¸³¸ø*pStu£¬ posµÄ·¶Î§ÊÇ[0, pL->length-1]*/
+Status ListGetElem(List L, int pos, Stu *pStu)
+{
+    /* ÔªËØÎ»ÖÃ·¶Î§³¬³ö */
+    if(pos < 0 || pos > L.length - 1)
+        return ERROR;
+    *pStu = L.stu[pos];
+    return OK;
+}
+
+
+static bool isEquals(Stu x, Stu y)
+{
+    if(x.age == y.age)
+    {
+        if(strcmp((const char *)x.name, (const char *)y.name) == 0)
+        {
+            return true;
+        }
+    }
+    return false;
+}
+/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
+/* ²Ù×÷½á¹û£ºÔÚË³ĞòÏßĞÔ±íLÖĞ²éÕÒÖ¸¶¨ÄÚÈİµÄÔªËØ£¬Èô±íÖĞ´æÔÚ¸ÃÔªËØ£¬Ôò·µ»ØµÚÒ»´Î³öÏÖµÄÎ»ÖÃ£¬Èô²»´æÔÚ£¬Ôò·µ»Ø-1 */
+int ListLocate(List L, Stu stu)
+{
+    for(int cnt = 0; cnt < L.length; cnt++)
+    {
+        if(isEquals(stu, L.stu[cnt]))
+        {
+            return cnt;
+        }
+    }
+    return -1;
+}
+
+
+static Status visit(Stu stu)
+{
+    printf("name=%s\tage=%d\r\n", stu.name, stu.age);
+    return OK;
+}
+/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
+/* ²Ù×÷½á¹û£ºÒÀ´Î¶ÔLµÄÃ¿¸öÊı¾İÔªËØÊä³ö */
+Status ListTraverse(List L)
+{
+    
+    for(int len = 0; len < L.length; len++)
+    {
+        visit(L.stu[len]);
+    }
+    printf("Traverse over!\r\n\r\n");
+    return OK;
+}
+
+
+/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±í*pLºÍLaÒÑ´æÔÚ */
+/* ²Ù×÷½á¹û£º½«LaÖĞµÄÔªËØ£¬ÒÀ´ÎÌí¼Óµ½*pL±íµÄÎ²²¿£¬ÊµÏÖÁ½¸öË³ĞòÏßĞÔ±íµÄ×éºÏ */
+Status ListMerge(List *pL, List La)
+{
+    for(int cnt = 0; cnt < La.length; cnt++)
+    {
+        Stu tmp = La.stu[cnt];
+        ListInsert(pL, pL->length, tmp);
+    }
+    return OK;
+}
+
 int main()
 {
-    AList al;
-    InitAList(&al);
+    List al;
+    InitList(&al);
     
     Stu stu;
-    stu.age = 1; stu.name = "abc";
-    AListInsert(&al, 0, stu);
-    stu.age = 2; stu.name = "def";
-    AListInsert(&al, 0, stu);
-    stu.age = 3; stu.name = "ghi";
-    AListInsert(&al, 0, stu);
-    stu.age = 4; stu.name = "jkl";
-    AListInsert(&al, 0, stu);
-    stu.age = 5; stu.name = "mn ";
-    AListInsert(&al, 0, stu);
-    stu.age = 6; stu.name = "opq";
-    AListInsert(&al, 0, stu);
-    stu.age = 7; stu.name = "rst";
-    AListInsert(&al, 0, stu);
-    stu.age = 8; stu.name = "uvw";
-    AListInsert(&al, 0, stu);
-    stu.age = 9; stu.name = "xyz";
-    AListInsert(&al, 0, stu);
+    stu.age = 21; stu.name = "abc";
+    ListInsert(&al, 0, stu);
+    stu.age = 20; stu.name = "def";
+    ListInsert(&al, 0, stu);
+    stu.age = 23; stu.name = "ghi";
+    ListInsert(&al, 0, stu);
+    stu.age = 22; stu.name = "jkl";
+    ListInsert(&al, 0, stu);
+    stu.age = 21; stu.name = "mn ";
+    ListInsert(&al, 0, stu);
+    stu.age = 19; stu.name = "opq";
+    ListInsert(&al, 0, stu);
+    stu.age = 20; stu.name = "rst";
+    ListInsert(&al, 0, stu);
+    stu.age = 21; stu.name = "uvw";
+    ListInsert(&al, 0, stu);
+    stu.age = 22; stu.name = "xyz";
+    ListInsert(&al, 0, stu);
+
+    List la;
+    InitList(&la);
+
+    stu.age = 23; stu.name = "Lon";
+    ListInsert(&la, 0, stu);
+    stu.age = 22; stu.name = "Wen";
+    ListInsert(&la, 0, stu);
+    stu.age = 21; stu.name = "Zhang";
+    ListInsert(&la, 0, stu);
+
+    int pos;
+    printf("Input a integer number to get the position of a certern element: ");
+    scanf("%d", &pos);
+    if(ListGetElem(al, pos, &stu) == OK)
+        printf("\r\nElement: name=%s\tage=%d\r\n\r\n", stu.name, stu.age);
+    else
+        printf("\r\nEnter number illigal\r\n\r\n");
+    
+    ListMerge(&al, la);
+
+    if(ListEmpty(al) == false)
+    {
+        ListTraverse(al);
+    }else
+    {
+        printf("List is Empty!\r\n");
+    }
+    
 
     for(int cnt = 0, len = al.length; cnt < len; cnt++)
     {
-        AListDelete(&al, 0, &stu);
-        printf("name=%s\tage=%d\r\nthe number of remain elements is %d\r\n", stu.name, stu.age, al.length);
+        ListDelete(&al, 0, &stu);
+        //printf("Delete: name=%s\tage=%d\r\nthe number of remain elements is %d\r\n\r\n", stu.name, stu.age, al.length);
     }
 
-    getchar();
+    if(ListEmpty(al) == false)
+    {
+        ListTraverse(al);
+    }else
+    {
+        printf("List is Empty!\r\n");
+    }
+
+    getchar();getchar();
     return 0;
 }
