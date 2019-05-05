@@ -13,5 +13,5 @@ typedef struct
 {
     char *name;
     int  age;
-}Stu;
+}Student;
 #endif

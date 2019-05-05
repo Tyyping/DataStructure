@@ -5,12 +5,12 @@
 
 typedef struct 
 {
-    Stu stu[MAX_SIZE];
+    Student stu[MAX_SIZE];
     int length;
 }List;
 
 
-/* ³õÊ¼»¯Ò»¸öÏßĞÔË³Ğò±í */
+/* åˆå§‹åŒ–ä¸€ä¸ªçº¿æ€§é¡ºåºè¡¨ */
 Status InitList(List *pL)
 {
     pL->length = 0;
@@ -18,8 +18,8 @@ Status InitList(List *pL)
 }
 
 
-/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
-/* ²Ù×÷½á¹û£º½«LÖØÖÃÎª¿Õ±í */
+/* åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨*pLå·²å­˜åœ¨ */
+/* æ“ä½œç»“æœï¼šæ¸…ç©ºä¸€ä¸ªçº¿æ€§è¡¨ï¼Œå°†é¡ºåºçº¿æ€§è¡¨é•¿åº¦æ¸…é›¶ */
 Status ClearList(List *pL)
 {
     pL->length = 0;
@@ -27,8 +27,8 @@ Status ClearList(List *pL)
 }
 
 
-/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
-/* ²Ù×÷½á¹û£ºÈôLÎª¿Õ±í£¬Ôò·µ»Øtrue£¬·ñÔò·µ»Øtrue */
+/* åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨Lå·²å­˜åœ¨ */
+/* æ“ä½œç»“æœï¼šåˆ¤æ–­é¡ºåºè¡¨æ˜¯å¦ä¸ºç©ºè¡¨ */
 bool ListEmpty(List L)
 {
     if(L.length == 0)
@@ -37,45 +37,44 @@ bool ListEmpty(List L)
         return false;
 }
 
-/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
-/* ²Ù×÷½á¹û£º·µ»ØLÖĞÊı¾İÔªËØ¸öÊı */
+/* åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨Lå·²å­˜åœ¨ */
+/* æ“ä½œç»“æœï¼šè·å–é¡ºåºè¡¨çš„é•¿åº¦ */
 int ListLength(List L)
 {
     return L.length;
 }
 
 
-/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
-/* ²Ù×÷½á¹û£ºÔÚ*pL±íÖĞµÄposÎ»ÖÃ²åÈëÒ»¸öÔªËØ£¬ posµÄ·¶Î§ÊÇ[0, pL->length]*/
-Status ListInsert(List *pL, int pos, Stu stu)
+/* åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨*pLå·²å­˜åœ¨ */
+/* æ“ä½œç»“æœï¼šåœ¨æŒ‡å®šä½ç½®æ’å…¥ä¸€ä¸ªå…ƒç´ ï¼Œ posçš„èŒƒå›´[0,pL->length] */
+Status ListInsert(List *pL, int pos, Student stu)
 {
-    /* Ë³ĞòÏßĞÔ±íÒÑÂú */
+    //å¦‚æœçº¿æ€§è¡¨æ•°ç»„å·²æ»¡ï¼Œåˆ™æ— æ³•æ’å…¥æ–°å…ƒç´ ï¼Œè¿”å›ERROR
     if(pL->length >= MAX_SIZE)
         return ERROR;
-    /* ²åÈëÎ»ÖÃÓĞÎó */
+    //å¦‚æœç»™å®šposä¸åœ¨å½“å‰é¡ºåºè¡¨èŒƒå›´å†…ï¼Œè¿”å›ERROR
     if(pos < 0 || pos > pL->length)
         return ERROR;
-    /* posÎ»ÖÃÖ®ºóµÄÔªËØ£¬ÒÀ´ÎÏòºóÒÆÒ»Î» */
+    //æ’å…¥ç‚¹åŠå…¶åé¢çš„æ•°æ®ï¼Œéƒ½è¦é€ä½å‘åç§»ä¸€ä½
     for(int p = pL->length - 1; p >= pos; --p)
     {
         pL->stu[p + 1] = pL->stu[p];
     }
-    pL->stu[pos] = stu;      //²åÈëµã¸³Öµ£¬½á¹¹Ìå¿ÉÒÔÕûÌå¸³Öµ
-    ++pL->length;            //³¤¶È+1
+    pL->stu[pos] = stu;
+    ++pL->length;
     return OK;
 }
 
 
-/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
-/* ²Ù×÷½á¹û£ºÉ¾³ı*pL±íÖĞposÎ»ÖÃÉÏµÄÔªËØ£¬ posµÄ·¶Î§ÊÇ[0, pL->length-1]*/
-Status ListDelete(List *pL, int pos, Stu *pStu)
+/* åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨*pLå·²å­˜åœ¨ */
+/* æ“ä½œç»“æœï¼šåˆ é™¤æŒ‡å®šä½ç½®ä¸Šçš„å…ƒç´ ï¼Œå¹¶å°†åˆ é™¤çš„å…ƒç´ å­˜åœ¨stuä¸­ */
+Status ListDelete(List *pL, int pos, Student *pStu)
 {
-    /* É¾³ıÎ»ÖÃÓĞÎó */
     if(pos < 0 || pos > pL->length - 1)
         return ERROR;
-    
-    *pStu = pL->stu[pos];    //ÌáÈ¡É¾³ıµãÔªËØ
-    /* posÎ»ÖÃÖ®ºóµÄÔªËØ£¬ÒÀ´ÎÏòÇ°ÒÆÒ»Î» */
+    //åˆ é™¤ç‚¹æ•°æ®è®°å½•
+    *pStu = pL->stu[pos];
+    //åˆ é™¤ç‚¹åé¢çš„æ•°æ®ï¼Œé€ä½å‘å‰ç§»ä¸€ä½
     for(int p = pos; p <= pL->length - 2; ++p)
     {
         pL->stu[p] = pL->stu[p + 1];
@@ -85,19 +84,21 @@ Status ListDelete(List *pL, int pos, Stu *pStu)
 }
 
 
-/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
-/* ²Ù×÷½á¹û£º½«L±íÖĞposÎ»ÖÃÉÏµÄÔªËØÖµ¸³¸ø*pStu£¬ posµÄ·¶Î§ÊÇ[0, pL->length-1]*/
-Status ListGetElem(List L, int pos, Stu *pStu)
+/* åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨Lå·²å­˜åœ¨ */
+/* æ“ä½œç»“æœï¼šè·å–æŒ‡å®šä½ç½®ä¸Šçš„å…ƒç´  */
+Status ListGetElem(List L, int pos, Student *pStu)
 {
-    /* ÔªËØÎ»ÖÃ·¶Î§³¬³ö */
+    //è‹¥ç»™å®šä½ç½®ä¸åœ¨é¡ºåºè¡¨çš„åˆæ³•èŒƒå›´å†…ï¼Œè¿”å›ERROR
     if(pos < 0 || pos > L.length - 1)
         return ERROR;
+    //å°†ç»™å®šä½ç½®ä¸Šçš„å…ƒç´ å†…å®¹èµ‹ç»™*pStu
     *pStu = L.stu[pos];
     return OK;
 }
 
 
-static bool isEquals(Stu x, Stu y)
+/*æ¯”è¾ƒx,yçš„å€¼ï¼Œç›¸ç­‰æ—¶è¿”å›TRUEï¼Œä¸ç­‰è¿”å›FALSE*/
+static bool isEquals(Student x, Student y)
 {
     if(x.age == y.age)
     {
@@ -108,9 +109,9 @@ static bool isEquals(Stu x, Stu y)
     }
     return false;
 }
-/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
-/* ²Ù×÷½á¹û£ºÔÚË³ĞòÏßĞÔ±íLÖĞ²éÕÒÖ¸¶¨ÄÚÈİµÄÔªËØ£¬Èô±íÖĞ´æÔÚ¸ÃÔªËØ£¬Ôò·µ»ØµÚÒ»´Î³öÏÖµÄÎ»ÖÃ£¬Èô²»´æÔÚ£¬Ôò·µ»Ø-1 */
-int ListLocate(List L, Stu stu)
+/* åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨*pLå·²å­˜åœ¨ */
+/* æ“ä½œç»“æœï¼šåœ¨é¡ºåºè¡¨ä¸­æŸ¥æ‰¾ç»™å®šå…ƒç´ ç¬¬ä¸€æ¬¡å‡ºç°çš„ä½ç½®å¹¶è¿”å›ï¼Œè‹¥é¡ºåºè¡¨ä¸­ä¸å­˜åœ¨è¯¥å…ƒç´ ï¼Œåˆ™è¿”å›-1 */
+int ListLocate(List L, Student stu)
 {
     for(int cnt = 0; cnt < L.length; cnt++)
     {
@@ -123,13 +124,13 @@ int ListLocate(List L, Stu stu)
 }
 
 
-static Status visit(Stu stu)
+static Status visit(Student stu)
 {
     printf("name=%s\tage=%d\r\n", stu.name, stu.age);
     return OK;
 }
-/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±íLÒÑ´æÔÚ */
-/* ²Ù×÷½á¹û£ºÒÀ´Î¶ÔLµÄÃ¿¸öÊı¾İÔªËØÊä³ö */
+/* åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨Lå·²å­˜åœ¨ */
+/* æ“ä½œç»“æœï¼šä¾æ¬¡å¯¹Lçš„æ¯ä¸ªæ•°æ®å…ƒç´ è¾“å‡º */
 Status ListTraverse(List L)
 {
     
@@ -142,13 +143,13 @@ Status ListTraverse(List L)
 }
 
 
-/* ³õÊ¼Ìõ¼ş£ºË³ĞòÏßĞÔ±í*pLºÍLaÒÑ´æÔÚ */
-/* ²Ù×÷½á¹û£º½«LaÖĞµÄÔªËØ£¬ÒÀ´ÎÌí¼Óµ½*pL±íµÄÎ²²¿£¬ÊµÏÖÁ½¸öË³ĞòÏßĞÔ±íµÄ×éºÏ */
+/* åˆå§‹æ¡ä»¶ï¼šé¡ºåºçº¿æ€§è¡¨*pLå’ŒLaå·²å­˜åœ¨ */
+/* æ“ä½œç»“æœï¼šå°†Laä¸­çš„å…ƒç´ ï¼Œä¾æ¬¡æ·»åŠ åˆ°*pLè¡¨çš„å°¾éƒ¨ï¼Œå®ç°ä¸¤ä¸ªé¡ºåºçº¿æ€§è¡¨çš„ç»„åˆ */
 Status ListMerge(List *pL, List La)
 {
     for(int cnt = 0; cnt < La.length; cnt++)
     {
-        Stu tmp = La.stu[cnt];
+        Student tmp = La.stu[cnt];
         ListInsert(pL, pL->length, tmp);
     }
     return OK;
@@ -159,7 +160,7 @@ int main()
     List al;
     InitList(&al);
     
-    Stu stu;
+    Student stu;
     stu.age = 21; stu.name = "abc";
     ListInsert(&al, 0, stu);
     stu.age = 20; stu.name = "def";
